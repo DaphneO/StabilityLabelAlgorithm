@@ -1,0 +1,1 @@
+web: gunicorn argument_app.modules.visualisation_interface.app:server
