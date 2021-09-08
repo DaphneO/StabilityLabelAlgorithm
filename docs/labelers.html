@@ -1,0 +1,602 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Labelers &mdash; Stability-Label Algorithm  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Visualisation of Labelling Algorithms" href="visualisation.html" />
+    <link rel="prev" title="Classes" href="classes.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Stability-Label Algorithm
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="classes.html">Classes</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Labelers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#what-is-a-labeler">What is a labeler?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-modules.argumentation.labelers.labeler_interface">Types of labelers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example-usage">Example usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="visualisation.html">Visualisation of Labelling Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="importing.html">Reading an argumentation system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datasetgeneration.html">Generating a data set</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experiments.html">Running Experiments</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Stability-Label Algorithm</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Labelers</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/labelers.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="labelers">
+<h1>Labelers<a class="headerlink" href="#labelers" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="what-is-a-labeler">
+<h2>What is a labeler?<a class="headerlink" href="#what-is-a-labeler" title="Permalink to this headline">¶</a></h2>
+<p>A labeler inherits from <a class="reference internal" href="#modules.argumentation.labelers.labeler_interface.LabelerInterface" title="modules.argumentation.labelers.labeler_interface.LabelerInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">LabelerInterface</span></code></a>,
+assigning a <code class="xref py py-class docutils literal notranslate"><span class="pre">Labels</span></code> object to the
+<a class="reference internal" href="classes.html#modules.argumentation.argumentation_theory.argumentation_theory.ArgumentationTheory" title="modules.argumentation.argumentation_theory.argumentation_theory.ArgumentationTheory"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentationTheory</span></code></a>.
+Such a <code class="xref py py-class docutils literal notranslate"><span class="pre">StabilityLabel</span></code> object to
+each <a class="reference internal" href="classes.html#modules.argumentation.argumentation_theory.literal.Literal" title="modules.argumentation.argumentation_theory.literal.Literal"><code class="xref py py-class docutils literal notranslate"><span class="pre">Literal</span></code></a> and
+<a class="reference internal" href="classes.html#modules.argumentation.argumentation_theory.rule.Rule" title="modules.argumentation.argumentation_theory.rule.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a> in the
+<a class="reference internal" href="classes.html#modules.argumentation.argumentation_theory.argumentation_theory.ArgumentationTheory" title="modules.argumentation.argumentation_theory.argumentation_theory.ArgumentationTheory"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentationTheory</span></code></a>.</p>
+<span class="target" id="module-modules.argumentation.labelers.labels"></span><dl class="py class">
+<dt class="sig sig-object py" id="modules.argumentation.labelers.labels.Labels">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">literal_labeling</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rule_labeling</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.argumentation.labelers.labels.Labels" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A Labels object consists of a Literal labeling, assigning StabilityLabels to Literals, and a Rule labeling,
+assigning StabilityLabels to Rules.</p>
+</dd></dl>
+
+<span class="target" id="module-modules.argumentation.labelers.stability_label"></span><dl class="py class">
+<dt class="sig sig-object py" id="modules.argumentation.labelers.stability_label.StabilityLabel">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">StabilityLabel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">unsatisfiable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">defended</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">blocked</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.argumentation.labelers.stability_label.StabilityLabel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A StabilityLabel consists of four booleans, corresponding to the statuses unsatisfiable, defended, out and blocked.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.argumentation.labelers.stability_label.StabilityLabel.from_str">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">label_str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.argumentation.labelers.stability_label.StabilityLabel.from_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the label from a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>label_str</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – String containing the information on the StabilityLabel.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>StabilityLabel read from the string.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="modules.argumentation.labelers.stability_label.StabilityLabel.is_contested_stable">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">is_contested_stable</span></span><a class="headerlink" href="#modules.argumentation.labelers.stability_label.StabilityLabel.is_contested_stable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the StabilityLabel contested-stable? This is the case if either the StabilityLabel is stable-defended or
+if the defended-boolean is False.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Boolean indicating if the StabilityLabel is contested-stable.</p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">StabilityLabel</span><span class="p">(</span><span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">is_contested_stable</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">StabilityLabel</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">is_contested_stable</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">StabilityLabel</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">is_contested_stable</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="modules.argumentation.labelers.stability_label.StabilityLabel.is_stable">
+<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">is_stable</span></span><em class="property"><span class="pre">:</span> <span class="pre">bool</span></em><a class="headerlink" href="#modules.argumentation.labelers.stability_label.StabilityLabel.is_stable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is the StabilityLabel stable? This is the case if only one of the booleans is True.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Boolean indicating if the StabilityLabel is stable.</p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">StabilityLabel</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">is_stable</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">StabilityLabel</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">is_stable</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-modules.argumentation.labelers.labeler_interface">
+<span id="types-of-labelers"></span><h2>Types of labelers<a class="headerlink" href="#module-modules.argumentation.labelers.labeler_interface" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="modules.argumentation.labelers.labeler_interface.LabelerInterface">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">LabelerInterface</span></span><a class="headerlink" href="#modules.argumentation.labelers.labeler_interface.LabelerInterface" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Interface for labelers. Actual Labeler-objects inherit from this class. They should all have a label method.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.argumentation.labelers.labeler_interface.LabelerInterface.label">
+<span class="sig-name descname"><span class="pre">label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argumentation_theory</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.argumentation.labelers.labeler_interface.LabelerInterface.label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign Labels to each Literal and Rule in the ArgumentationTheory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>argumentation_theory</strong> (<a class="reference internal" href="classes.html#modules.argumentation.argumentation_theory.argumentation_theory.ArgumentationTheory" title="modules.argumentation.argumentation_theory.argumentation_theory.ArgumentationTheory"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentationTheory</span></code></a>) – ArgumentationTheory that should be labelled.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#modules.argumentation.labelers.labels.Labels" title="modules.argumentation.labelers.labels.Labels"><code class="xref py py-class docutils literal notranslate"><span class="pre">Labels</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Labels for the ArgumentationTheory.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-modules.argumentation.labelers.four_bool_labeler"></span><dl class="py class">
+<dt class="sig sig-object py" id="modules.argumentation.labelers.four_bool_labeler.FourBoolLabeler">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">FourBoolLabeler</span></span><a class="headerlink" href="#modules.argumentation.labelers.four_bool_labeler.FourBoolLabeler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#modules.argumentation.labelers.labeler_interface.LabelerInterface" title="modules.argumentation.labelers.labeler_interface.LabelerInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">modules.argumentation.labelers.labeler_interface.LabelerInterface</span></code></a></p>
+<p>The FourBoolLabeler is the labeler presented at COMMA 2020 (version with classical negation) and submitted to ESwA.
+This Labeler uses the SatisfiabilityLabeler as preprocessing step and subsequently iteratively checks which of the
+four booleans in the StabilityLabels can be turned from True to False.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.argumentation.labelers.four_bool_labeler.FourBoolLabeler.color_literal">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">color_literal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argumentation_theory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">literal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.argumentation.labelers.four_bool_labeler.FourBoolLabeler.color_literal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Color the Literal, that is: check, based on observations/rules for this literal/rules for its contraries, if
+this Literal can still become unsatisfiable/defended/out/blocked.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.argumentation.labelers.four_bool_labeler.FourBoolLabeler.color_rule">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">color_rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rule</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.argumentation.labelers.four_bool_labeler.FourBoolLabeler.color_rule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Color the Rule, that is: check, based on is children, if this Rule can still become
+unsatisfiable/defended/out/blocked.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.argumentation.labelers.four_bool_labeler.FourBoolLabeler.label">
+<span class="sig-name descname"><span class="pre">label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argumentation_theory</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.argumentation.labelers.four_bool_labeler.FourBoolLabeler.label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign Labels to each Literal and Rule in the ArgumentationTheory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>argumentation_theory</strong> (<a class="reference internal" href="classes.html#modules.argumentation.argumentation_theory.argumentation_theory.ArgumentationTheory" title="modules.argumentation.argumentation_theory.argumentation_theory.ArgumentationTheory"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentationTheory</span></code></a>) – ArgumentationTheory that should be labelled.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#modules.argumentation.labelers.labels.Labels" title="modules.argumentation.labelers.labels.Labels"><code class="xref py py-class docutils literal notranslate"><span class="pre">Labels</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Labels for the ArgumentationTheory.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-modules.argumentation.labelers.satisfiability_labeler"></span><dl class="py class">
+<dt class="sig sig-object py" id="modules.argumentation.labelers.satisfiability_labeler.SatisfiabilityLabeler">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">SatisfiabilityLabeler</span></span><a class="headerlink" href="#modules.argumentation.labelers.satisfiability_labeler.SatisfiabilityLabeler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#modules.argumentation.labelers.labeler_interface.LabelerInterface" title="modules.argumentation.labelers.labeler_interface.LabelerInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">modules.argumentation.labelers.labeler_interface.LabelerInterface</span></code></a></p>
+<p>Proprocessing step of the FourBoolLabeler. Checks for each Literal if there is a potential argument for this Literal
+and for each Rule if there is a potential argument based on this Rule.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.argumentation.labelers.satisfiability_labeler.SatisfiabilityLabeler.label">
+<span class="sig-name descname"><span class="pre">label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argumentation_theory</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.argumentation.labelers.satisfiability_labeler.SatisfiabilityLabeler.label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign Labels to each Literal and Rule in the ArgumentationTheory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>argumentation_theory</strong> (<a class="reference internal" href="classes.html#modules.argumentation.argumentation_theory.argumentation_theory.ArgumentationTheory" title="modules.argumentation.argumentation_theory.argumentation_theory.ArgumentationTheory"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentationTheory</span></code></a>) – ArgumentationTheory that should be labelled.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#modules.argumentation.labelers.labels.Labels" title="modules.argumentation.labelers.labels.Labels"><code class="xref py py-class docutils literal notranslate"><span class="pre">Labels</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Labels for the ArgumentationTheory.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-modules.argumentation.labelers.acceptability_labeler"></span><dl class="py class">
+<dt class="sig sig-object py" id="modules.argumentation.labelers.acceptability_labeler.JustificationLabeler">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">JustificationLabeler</span></span><a class="headerlink" href="#modules.argumentation.labelers.acceptability_labeler.JustificationLabeler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#modules.argumentation.labelers.labeler_interface.LabelerInterface" title="modules.argumentation.labelers.labeler_interface.LabelerInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">modules.argumentation.labelers.labeler_interface.LabelerInterface</span></code></a></p>
+<p>The JustificationLabeler labels literals according to their justification status. For example, if a literal is
+defended in the current ArgumentationTheory, then it is assigned the StabilityLabel(False, True, False, False).
+In order to do so, it uses the SatisfiableLabeler in the preprocessing step.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.argumentation.labelers.acceptability_labeler.JustificationLabeler.color_literal">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">color_literal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argumentation_theory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">literal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.argumentation.labelers.acceptability_labeler.JustificationLabeler.color_literal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Color the Literal, that is: check, based on observations/Rules for this Literal/Rules for its contraries, if
+this Literal may be unsatisfiable, defended, out or blocked.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.argumentation.labelers.acceptability_labeler.JustificationLabeler.color_rule">
+<em class="property"><span class="pre">static</span> </em><span class="sig-name descname"><span class="pre">color_rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rule</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.argumentation.labelers.acceptability_labeler.JustificationLabeler.color_rule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Color the Rule, that is: check, based on its antecedents, if this Rule can still become unsatisfiable, defended,
+out or blocked.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.argumentation.labelers.acceptability_labeler.JustificationLabeler.label">
+<span class="sig-name descname"><span class="pre">label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argumentation_theory</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.argumentation.labelers.acceptability_labeler.JustificationLabeler.label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign Labels to each Literal and Rule in the ArgumentationTheory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>argumentation_theory</strong> (<a class="reference internal" href="classes.html#modules.argumentation.argumentation_theory.argumentation_theory.ArgumentationTheory" title="modules.argumentation.argumentation_theory.argumentation_theory.ArgumentationTheory"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentationTheory</span></code></a>) – ArgumentationTheory that should be labelled.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#modules.argumentation.labelers.labels.Labels" title="modules.argumentation.labelers.labels.Labels"><code class="xref py py-class docutils literal notranslate"><span class="pre">Labels</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Labels for the ArgumentationTheory.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-modules.argumentation.labelers.satisfiable_labeler"></span><dl class="py class">
+<dt class="sig sig-object py" id="modules.argumentation.labelers.satisfiable_labeler.SatisfiableLabeler">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">SatisfiableLabeler</span></span><a class="headerlink" href="#modules.argumentation.labelers.satisfiable_labeler.SatisfiableLabeler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#modules.argumentation.labelers.labeler_interface.LabelerInterface" title="modules.argumentation.labelers.labeler_interface.LabelerInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">modules.argumentation.labelers.labeler_interface.LabelerInterface</span></code></a></p>
+<p>The SatisfiableLabeler is used in the preprocessing step of the AcceptabilityLabeler. It checks for each Literal
+if there is an argument for the Literal in the current ArgumentationTheory and for each Rule if there is an argument
+based on this Rule in the current ArgumentationTheory.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.argumentation.labelers.satisfiable_labeler.SatisfiableLabeler.label">
+<span class="sig-name descname"><span class="pre">label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argumentation_theory</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.argumentation.labelers.satisfiable_labeler.SatisfiableLabeler.label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign Labels to each Literal and Rule in the ArgumentationTheory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>argumentation_theory</strong> (<a class="reference internal" href="classes.html#modules.argumentation.argumentation_theory.argumentation_theory.ArgumentationTheory" title="modules.argumentation.argumentation_theory.argumentation_theory.ArgumentationTheory"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentationTheory</span></code></a>) – ArgumentationTheory that should be labelled.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#modules.argumentation.labelers.labels.Labels" title="modules.argumentation.labelers.labels.Labels"><code class="xref py py-class docutils literal notranslate"><span class="pre">Labels</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Labels for the ArgumentationTheory.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-modules.argumentation.labelers.fqas_labeler"></span><dl class="py class">
+<dt class="sig sig-object py" id="modules.argumentation.labelers.fqas_labeler.FQASLabeler">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">FQASLabeler</span></span><a class="headerlink" href="#modules.argumentation.labelers.fqas_labeler.FQASLabeler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#modules.argumentation.labelers.labeler_interface.LabelerInterface" title="modules.argumentation.labelers.labeler_interface.LabelerInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">modules.argumentation.labelers.labeler_interface.LabelerInterface</span></code></a></p>
+<p>This is an initial labeler for stability, as presented at FQAS 2019. The FQASLabeler only assigns a single label
+(here modelled as the “stable” StabilityLabels) corresponding to stable justification statuses or some unknown
+label (here modelled as StableLabel(True, True, True, True)) for Literals and Rules that are not recognised as
+being stable. Note that this algorithm recognises less stable situations than the FourBoolLabeler.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.argumentation.labelers.fqas_labeler.FQASLabeler.color_literal">
+<span class="sig-name descname"><span class="pre">color_literal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argumentation_theory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">literal</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.argumentation.labelers.fqas_labeler.FQASLabeler.color_literal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Color the Literal, that is: check, based on observations/rules for this literal/rules for its contraries, if
+this Literal can still become unsatisfiable/defended/out/blocked.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.argumentation.labelers.fqas_labeler.FQASLabeler.color_rule">
+<span class="sig-name descname"><span class="pre">color_rule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rule</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.argumentation.labelers.fqas_labeler.FQASLabeler.color_rule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Color the Rule, that is: check, based on is antecedents, if this Rule can still become
+unsatisfiable/defended/out/blocked.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.argumentation.labelers.fqas_labeler.FQASLabeler.label">
+<span class="sig-name descname"><span class="pre">label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argumentation_theory</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.argumentation.labelers.fqas_labeler.FQASLabeler.label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign Labels to each Literal and Rule in the ArgumentationTheory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>argumentation_theory</strong> (<a class="reference internal" href="classes.html#modules.argumentation.argumentation_theory.argumentation_theory.ArgumentationTheory" title="modules.argumentation.argumentation_theory.argumentation_theory.ArgumentationTheory"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentationTheory</span></code></a>) – ArgumentationTheory that should be labelled.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#modules.argumentation.labelers.labels.Labels" title="modules.argumentation.labelers.labels.Labels"><code class="xref py py-class docutils literal notranslate"><span class="pre">Labels</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Labels for the ArgumentationTheory.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-modules.argumentation.labelers.naive_stability_labeler"></span><dl class="py class">
+<dt class="sig sig-object py" id="modules.argumentation.labelers.naive_stability_labeler.NaiveStabilityLabeler">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">NaiveStabilityLabeler</span></span><a class="headerlink" href="#modules.argumentation.labelers.naive_stability_labeler.NaiveStabilityLabeler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#modules.argumentation.labelers.labeler_interface.LabelerInterface" title="modules.argumentation.labelers.labeler_interface.LabelerInterface"><code class="xref py py-class docutils literal notranslate"><span class="pre">modules.argumentation.labelers.labeler_interface.LabelerInterface</span></code></a></p>
+<p>An exact but extremely slow labeler for detecting stability. Given some ArgumentationTheory, NaiveStabilityLabeler
+generates all future ArgumentationTheories and runs the JustificationLabeler’s label algorithm on each of them.
+Only if the label is the same for all future ArgumentationTheories, the corresponding Literal or Rule is labelled
+stable. This algorithm is exponential.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.argumentation.labelers.naive_stability_labeler.NaiveStabilityLabeler.label">
+<span class="sig-name descname"><span class="pre">label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argumentation_theory</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.argumentation.labelers.naive_stability_labeler.NaiveStabilityLabeler.label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign Labels to each Literal and Rule in the ArgumentationTheory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>argumentation_theory</strong> (<a class="reference internal" href="classes.html#modules.argumentation.argumentation_theory.argumentation_theory.ArgumentationTheory" title="modules.argumentation.argumentation_theory.argumentation_theory.ArgumentationTheory"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentationTheory</span></code></a>) – ArgumentationTheory that should be labelled.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#modules.argumentation.labelers.labels.Labels" title="modules.argumentation.labelers.labels.Labels"><code class="xref py py-class docutils literal notranslate"><span class="pre">Labels</span></code></a></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Labels for the ArgumentationTheory.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-modules.argumentation.labelers.timed_four_bool_labeler"></span><dl class="py class">
+<dt class="sig sig-object py" id="modules.argumentation.labelers.timed_four_bool_labeler.TimedFourBoolLabeler">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">TimedFourBoolLabeler</span></span><a class="headerlink" href="#modules.argumentation.labelers.timed_four_bool_labeler.TimedFourBoolLabeler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#modules.argumentation.labelers.four_bool_labeler.FourBoolLabeler" title="modules.argumentation.labelers.four_bool_labeler.FourBoolLabeler"><code class="xref py py-class docutils literal notranslate"><span class="pre">modules.argumentation.labelers.four_bool_labeler.FourBoolLabeler</span></code></a></p>
+<p>This is a timed version of the regular FourBoolLabeler, which returns not only the Labels but only the number of
+calls to the methods for relabelling Literals and Rules.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.argumentation.labelers.timed_four_bool_labeler.TimedFourBoolLabeler.label">
+<span class="sig-name descname"><span class="pre">label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argumentation_theory</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.argumentation.labelers.timed_four_bool_labeler.TimedFourBoolLabeler.label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assign Labels to each Literal and Rule in the ArgumentationTheory and record the number of calls to the methods
+for relabelling Literals and Rules.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>argumentation_theory</strong> (<a class="reference internal" href="classes.html#modules.argumentation.argumentation_theory.argumentation_theory.ArgumentationTheory" title="modules.argumentation.argumentation_theory.argumentation_theory.ArgumentationTheory"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentationTheory</span></code></a>) – ArgumentationTheory that should be labelled.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<a class="reference internal" href="#modules.argumentation.labelers.labels.Labels" title="modules.argumentation.labelers.labels.Labels"><code class="xref py py-class docutils literal notranslate"><span class="pre">Labels</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Labels for the ArgumentationTheory, number of calls relabelling Literals and Rules.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="example-usage">
+<h2>Example usage<a class="headerlink" href="#example-usage" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">stability_label_algorithm.modules.argumentation.importers.argumentation_system_xlsx_reader</span> <span class="kn">import</span> \
+<span class="n">ArgumentationSystemXLSXReader</span>
+<span class="kn">from</span> <span class="nn">stability_label_algorithm.modules.argumentation.argumentation_theory.argumentation_system</span> <span class="kn">import</span> \
+    <span class="n">ArgumentationSystem</span>
+<span class="kn">from</span> <span class="nn">stability_label_algorithm.modules.argumentation.argumentation_engine</span> <span class="kn">import</span> <span class="n">ArgumentationEngine</span>
+<span class="kn">from</span> <span class="nn">stability_label_algorithm.modules.argumentation.labelers.fqas_labeler</span> <span class="kn">import</span> <span class="n">FQASLabeler</span>
+<span class="kn">from</span> <span class="nn">stability_label_algorithm.modules.argumentation.labelers.four_bool_labeler</span> <span class="kn">import</span> <span class="n">FourBoolLabeler</span>
+<span class="kn">from</span> <span class="nn">stability_label_algorithm.modules.argumentation.labelers.satisfiability_labeler</span> <span class="kn">import</span> <span class="n">SatisfiabilityLabeler</span>
+<span class="kn">from</span> <span class="nn">stability_label_algorithm.modules.argumentation.labelers.acceptability_labeler</span> <span class="kn">import</span> <span class="n">AcceptabilityLabeler</span>
+
+<span class="n">asr</span> <span class="o">=</span> <span class="n">ArgumentationSystemXLSXReader</span><span class="p">(</span><span class="n">path_to_resources</span><span class="p">(</span><span class="s1">&#39;03_2019_FQAS_Paper_Example&#39;</span><span class="p">))</span>
+<span class="n">arg_system</span> <span class="o">=</span> <span class="n">ArgumentationSystem</span><span class="p">(</span><span class="n">asr</span><span class="o">.</span><span class="n">language</span><span class="p">,</span> <span class="n">asr</span><span class="o">.</span><span class="n">rules</span><span class="p">,</span> <span class="n">asr</span><span class="o">.</span><span class="n">topic_literals</span><span class="p">)</span>
+<span class="n">arg_engine_four_bool</span> <span class="o">=</span> <span class="n">ArgumentationEngine</span><span class="p">(</span><span class="n">arg_system</span><span class="p">,</span> <span class="n">FourBoolLabeler</span><span class="p">())</span>
+<span class="n">arg_engine_fqas</span> <span class="o">=</span> <span class="n">ArgumentationEngine</span><span class="p">(</span><span class="n">arg_system</span><span class="p">,</span> <span class="n">FQASLabeler</span><span class="p">())</span>
+<span class="n">arg_engine_acceptability</span> <span class="o">=</span> <span class="n">ArgumentationEngine</span><span class="p">(</span><span class="n">arg_system</span><span class="p">,</span> <span class="n">AcceptabilityLabeler</span><span class="p">())</span>
+<span class="n">arg_engine_satisfiablility</span> <span class="o">=</span> <span class="n">ArgumentationEngine</span><span class="p">(</span><span class="n">arg_system</span><span class="p">,</span> <span class="n">SatisfiabilityLabeler</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>First consider a few usages of <a class="reference internal" href="#modules.argumentation.labelers.fqas_labeler.FQASLabeler" title="modules.argumentation.labelers.fqas_labeler.FQASLabeler"><code class="xref py py-class docutils literal notranslate"><span class="pre">modules.argumentation.labelers.fqas_labeler.FQASLabeler</span></code></a>:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">arg_engine_fqas_output</span> <span class="o">=</span> <span class="n">arg_engine_fqas</span><span class="o">.</span><span class="n">update</span><span class="p">([</span><span class="s1">&#39;wrong_product&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">arg_engine_fqas_output</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">literal_labeling</span><span class="p">[</span><span class="n">arg_system</span><span class="o">.</span><span class="n">language</span><span class="p">[</span><span class="s1">&#39;fraud&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">is_stable</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">arg_engine_fqas_output</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">literal_labeling</span><span class="p">[</span><span class="n">arg_system</span><span class="o">.</span><span class="n">language</span><span class="p">[</span><span class="s1">&#39;fraud&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">is_contested_stable</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">arg_engine_fqas_output</span> <span class="o">=</span> <span class="n">arg_engine_fqas</span><span class="o">.</span><span class="n">update</span><span class="p">([</span><span class="s1">&#39;wrong_product&#39;</span><span class="p">,</span> <span class="s1">&#39;counter_party_delivered&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">arg_engine_fqas_output</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">literal_labeling</span><span class="p">[</span><span class="n">arg_system</span><span class="o">.</span><span class="n">language</span><span class="p">[</span><span class="s1">&#39;fraud&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">is_stable</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">arg_engine_fqas_output</span> <span class="o">=</span> <span class="n">arg_engine_fqas</span><span class="o">.</span><span class="n">update</span><span class="p">([</span><span class="s1">&#39;counter_party_delivered&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">arg_engine_fqas_output</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">literal_labeling</span><span class="p">[</span><span class="n">arg_system</span><span class="o">.</span><span class="n">language</span><span class="p">[</span><span class="s1">&#39;fraud&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">is_contested_stable</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">arg_engine_four_bool_output</span> <span class="o">=</span> <span class="n">arg_engine_four_bool</span><span class="o">.</span><span class="n">update</span><span class="p">([</span><span class="s1">&#39;wrong_product&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">arg_engine_four_bool_output</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">literal_labeling</span><span class="p">[</span><span class="n">arg_system</span><span class="o">.</span><span class="n">language</span><span class="p">[</span><span class="s1">&#39;fraud&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">is_stable</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">arg_engine_four_bool_output</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">literal_labeling</span><span class="p">[</span><span class="n">arg_system</span><span class="o">.</span><span class="n">language</span><span class="p">[</span><span class="s1">&#39;fraud&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">is_contested_stable</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>In the same way, other labelers, such as <code class="xref py py-class docutils literal notranslate"><span class="pre">modules.argumentation.labelers.fqas_labeler.FourBoolLabeler</span></code>, can be used:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">arg_engine_four_bool_output</span> <span class="o">=</span> <span class="n">arg_engine_four_bool</span><span class="o">.</span><span class="n">update</span><span class="p">([</span><span class="s1">&#39;wrong_product&#39;</span><span class="p">,</span> <span class="s1">&#39;counter_party_delivered&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">arg_engine_four_bool_output</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">literal_labeling</span><span class="p">[</span><span class="n">arg_system</span><span class="o">.</span><span class="n">language</span><span class="p">[</span><span class="s1">&#39;fraud&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">is_stable</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">arg_engine_four_bool_output</span> <span class="o">=</span> <span class="n">arg_engine_four_bool</span><span class="o">.</span><span class="n">update</span><span class="p">([</span><span class="s1">&#39;counter_party_delivered&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">arg_engine_four_bool_output</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">literal_labeling</span><span class="p">[</span><span class="n">arg_system</span><span class="o">.</span><span class="n">language</span><span class="p">[</span><span class="s1">&#39;fraud&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">is_contested_stable</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="visualisation.html" class="btn btn-neutral float-right" title="Visualisation of Labelling Algorithms" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="classes.html" class="btn btn-neutral float-left" title="Classes" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Daphne Odekerken.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

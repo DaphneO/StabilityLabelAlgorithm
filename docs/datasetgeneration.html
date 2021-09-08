@@ -1,0 +1,573 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Generating a data set &mdash; Stability-Label Algorithm  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Running Experiments" href="experiments.html" />
+    <link rel="prev" title="Reading an argumentation system" href="importing.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Stability-Label Algorithm
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="classes.html">Classes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="labelers.html">Labelers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="visualisation.html">Visualisation of Labelling Algorithms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="importing.html">Reading an argumentation system</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Generating a data set</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#generating-an-argumentation-system">Generating an argumentation system</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#random-argumentation-system-generator">Random argumentation system generator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#layered-argumentation-system-generator">Layered argumentation system generator</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#computing-properties-for-an-argumentationtheory-or-argumentationsystem">Computing properties for an ArgumentationTheory or ArgumentationSystem</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#generating-a-dataset-for-a-specific-argumentationtheory">Generating a Dataset for a specific ArgumentationTheory</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#dataset-classes">DataSet classes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="experiments.html">Running Experiments</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Stability-Label Algorithm</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Generating a data set</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/datasetgeneration.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="generating-a-data-set">
+<h1>Generating a data set<a class="headerlink" href="#generating-a-data-set" title="Permalink to this headline">¶</a></h1>
+<p>In order to empirically assess the accuracy and computation time of the labelling algorithms, one requires a data set.
+We added various options for data set generation to our repository.</p>
+<div class="section" id="generating-an-argumentation-system">
+<h2>Generating an argumentation system<a class="headerlink" href="#generating-an-argumentation-system" title="Permalink to this headline">¶</a></h2>
+<p>Instead of manually designing an argumentation system and loading it (using an
+<a class="reference internal" href="importing.html#modules.argumentation.importers.argumentation_system_xlsx_reader.ArgumentationSystemXLSXReader" title="modules.argumentation.importers.argumentation_system_xlsx_reader.ArgumentationSystemXLSXReader"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentationSystemXLSXReader</span></code></a>)
+we also provide functionality to automatically generate an argumentation system.
+The repository currently holds two types of generators: a random and a layered argumentation system generator.</p>
+<div class="section" id="random-argumentation-system-generator">
+<h3>Random argumentation system generator<a class="headerlink" href="#random-argumentation-system-generator" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="modules.dataset_generator.argumentation_system_generator.random.random_argumentation_system_generator.RandomArgumentationSystemGenerator">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">RandomArgumentationSystemGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argumentation_system_generation_parameters</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.dataset_generator.argumentation_system_generator.random.random_argumentation_system_generator.RandomArgumentationSystemGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">modules.dataset_generator.argumentation_system_generator.argumentation_system_generator_interface.ArgumentationSystemGeneratorInterface</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.dataset_generator.argumentation_system_generator.random.random_argumentation_system_generator.RandomArgumentationSystemGenerator.generate">
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#modules.dataset_generator.argumentation_system_generator.random.random_argumentation_system_generator.RandomArgumentationSystemGenerator.generate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Randomly generate a new ArgumentationSystem based on the RandomArgumentationSystemGeneratorParameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="classes.html#modules.argumentation.argumentation_theory.argumentation_system.ArgumentationSystem" title="modules.argumentation.argumentation_theory.argumentation_system.ArgumentationSystem"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentationSystem</span></code></a></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The generated ArgumentationSystem.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="modules.dataset_generator.argumentation_system_generator.random.random_argumentation_system_generator_parameters.RandomArgumentationSystemGeneratorParameters">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">RandomArgumentationSystemGeneratorParameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">language_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rule_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rule_antecedent_distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">queryable_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">queryable_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_rules_for_queryables</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_conclusion_in_antecedents</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_inconsistent_antecedents</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.dataset_generator.argumentation_system_generator.random.random_argumentation_system_generator_parameters.RandomArgumentationSystemGeneratorParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<blockquote>
+<div><dl class="py method">
+<dt class="sig sig-object py" id="modules.dataset_generator.argumentation_system_generator.random.random_argumentation_system_generator_parameters.RandomArgumentationSystemGeneratorParameters.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">language_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rule_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rule_antecedent_distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">queryable_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">queryable_ratio</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_rules_for_queryables</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_conclusion_in_antecedents</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_inconsistent_antecedents</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.dataset_generator.argumentation_system_generator.random.random_argumentation_system_generator_parameters.RandomArgumentationSystemGeneratorParameters.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parameters for randomly generating an ArgumentationSystem.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>language_size</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Number of Literals (including negations)</p></li>
+<li><p><strong>rule_size</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – Number of Rules</p></li>
+<li><p><strong>rule_antecedent_distribution</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – Number of Rules with a specific number of antecedents.</p></li>
+<li><p><strong>queryable_size</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – Number of Queryables.</p></li>
+<li><p><strong>queryable_ratio</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code>]) – Fraction of Queryables by the number of Literals.</p></li>
+<li><p><strong>allow_rules_for_queryables</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – Boolean indicating if there can be Rules for Queryables.</p></li>
+<li><p><strong>allow_conclusion_in_antecedents</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – Boolean indicating if a Rule can have its conclusion as an antecedent.</p></li>
+<li><p><strong>allow_inconsistent_antecedents</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – Boolean indicating if a Rule can have inconsistent antecedents.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+</div>
+<div class="section" id="layered-argumentation-system-generator">
+<h3>Layered argumentation system generator<a class="headerlink" href="#layered-argumentation-system-generator" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="modules.dataset_generator.argumentation_system_generator.layered.layered_argumentation_system_generator.LayeredArgumentationSystemGenerator">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">LayeredArgumentationSystemGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argumentation_system_generation_parameters</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.dataset_generator.argumentation_system_generator.layered.layered_argumentation_system_generator.LayeredArgumentationSystemGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">modules.dataset_generator.argumentation_system_generator.argumentation_system_generator_interface.ArgumentationSystemGeneratorInterface</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.dataset_generator.argumentation_system_generator.layered.layered_argumentation_system_generator.LayeredArgumentationSystemGenerator.generate">
+<span class="sig-name descname"><span class="pre">generate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#modules.dataset_generator.argumentation_system_generator.layered.layered_argumentation_system_generator.LayeredArgumentationSystemGenerator.generate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate an ArgumentationSystem with a layered structure according to the
+LayeredArgumentationSystemGeneratorParameters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="classes.html#modules.argumentation.argumentation_theory.argumentation_system.ArgumentationSystem" title="modules.argumentation.argumentation_theory.argumentation_system.ArgumentationSystem"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentationSystem</span></code></a></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The generated ArgumentationSystem.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="modules.dataset_generator.argumentation_system_generator.layered.layered_argumentation_system_generator_parameters.LayeredArgumentationSystemGeneratorParameters">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">LayeredArgumentationSystemGeneratorParameters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">language_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rule_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rule_antecedent_distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">literal_layer_distribution</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.dataset_generator.argumentation_system_generator.layered.layered_argumentation_system_generator_parameters.LayeredArgumentationSystemGeneratorParameters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<blockquote>
+<div><dl class="py method">
+<dt class="sig sig-object py" id="modules.dataset_generator.argumentation_system_generator.layered.layered_argumentation_system_generator_parameters.LayeredArgumentationSystemGeneratorParameters.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">language_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rule_size</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rule_antecedent_distribution</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">literal_layer_distribution</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.dataset_generator.argumentation_system_generator.layered.layered_argumentation_system_generator_parameters.LayeredArgumentationSystemGeneratorParameters.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parameters for randomly generating an ArgumentationSystem with a layered structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>language_size</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – The number of Literals (including negations).</p></li>
+<li><p><strong>rule_size</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – The number of Rules.</p></li>
+<li><p><strong>rule_antecedent_distribution</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – The number of Rules having a specific number of antecedents.</p></li>
+<li><p><strong>literal_layer_distribution</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>]) – The number of Literals in a specific layer.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="computing-properties-for-an-argumentationtheory-or-argumentationsystem">
+<h2>Computing properties for an ArgumentationTheory or ArgumentationSystem<a class="headerlink" href="#computing-properties-for-an-argumentationtheory-or-argumentationsystem" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="modules.dataset_generator.argumentation_theory_property_computer.argumentation_theory_property_computer.compute_argumentation_theory_properties">
+<span class="sig-name descname"><span class="pre">compute_argumentation_theory_properties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argumentation_theory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.dataset_generator.argumentation_theory_property_computer.argumentation_theory_property_computer.compute_argumentation_theory_properties" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute some properties of the given ArgumentationTheory, such as the corresponding incomplete argumentation
+framework or the number of future ArgumentationTheories.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>argumentation_theory</strong> (<a class="reference internal" href="classes.html#modules.argumentation.argumentation_theory.argumentation_theory.ArgumentationTheory" title="modules.argumentation.argumentation_theory.argumentation_theory.ArgumentationTheory"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentationTheory</span></code></a>) – ArgumentationTheory for which properties are needed.</p></li>
+<li><p><strong>verbose</strong> – Boolean indicating if information should be printed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentationTheoryProperties</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>ArgumentationTheoryProperties of the ArgumentationTheory.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="modules.dataset_generator.argumentation_theory_property_computer.argumentation_theory_property_computer.enumerate_future_argumentation_theories">
+<span class="sig-name descname"><span class="pre">enumerate_future_argumentation_theories</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argumentation_theory</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.dataset_generator.argumentation_theory_property_computer.argumentation_theory_property_computer.enumerate_future_argumentation_theories" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enumerate all future ArgumentationTheories of this ArgumentationTheory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>argumentation_theory</strong> (<a class="reference internal" href="classes.html#modules.argumentation.argumentation_theory.argumentation_theory.ArgumentationTheory" title="modules.argumentation.argumentation_theory.argumentation_theory.ArgumentationTheory"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentationTheory</span></code></a>) – ArgumentationTheory for which future ArgumentationTheories should be enumerated.</p></li>
+<li><p><strong>verbose</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – Boolean indicating if information should be printed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<a class="reference internal" href="classes.html#modules.argumentation.argumentation_theory.argumentation_theory.ArgumentationTheory" title="modules.argumentation.argumentation_theory.argumentation_theory.ArgumentationTheory"><code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentationTheory</span></code></a>]</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>All future ArgumentationTheories of this ArgumentationTheory.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="modules.dataset_generator.argumentation_system_property_computer.argumentation_system_property_computer.compute_argumentation_system_properties">
+<span class="sig-name descname"><span class="pre">compute_argumentation_system_properties</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argumentation_system</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.dataset_generator.argumentation_system_property_computer.argumentation_system_property_computer.compute_argumentation_system_properties" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute some properties of the given ArgumentationSystem, such as the number of literals or rule antecedents.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>argumentation_system</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentationSystem</span></code>) – ArgumentationSystem for which properties are needed.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentationSystemProperties</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>ArgumentationSystemProperties of the ArgumentationSystem.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="generating-a-dataset-for-a-specific-argumentationtheory">
+<h2>Generating a Dataset for a specific ArgumentationTheory<a class="headerlink" href="#generating-a-dataset-for-a-specific-argumentationtheory" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="modules.dataset_generator.dataset_generator.DatasetGenerator">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">DatasetGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argumentation_system</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">argumentation_system_custom_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.dataset_generator.dataset_generator.DatasetGenerator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.dataset_generator.dataset_generator.DatasetGenerator.from_file">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argumentation_system_file_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.dataset_generator.dataset_generator.DatasetGenerator.from_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a Dataset for an ArgumentationSystem that must still be read from a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>argumentation_system_file_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Name of ArgumentationSystem for which a Dataset should be generated.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Dataset for specified ArgumentationSystem.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.dataset_generator.dataset_generator.DatasetGenerator.generate_dataset">
+<span class="sig-name descname"><span class="pre">generate_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">custom_dataset_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_ground_truth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.dataset_generator.dataset_generator.DatasetGenerator.generate_dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a Dataset, where all possible ArgumentationTheories for the given ArgumentationSystem are generated.
+Note: for ArgumentationSystems with many Queryables, this takes a lot of time.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>custom_dataset_name</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – Optional, name of the Dataset. Otherwise a name based on the timestamp is chosen.</p></li>
+<li><p><strong>include_ground_truth</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – Boolean indicating if the ground truth should be computed. Note: this takes time!</p></li>
+<li><p><strong>verbose</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – Boolean indicating if information should be printed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The resulting Dataset.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.dataset_generator.dataset_generator.DatasetGenerator.generate_dataset_sample">
+<span class="sig-name descname"><span class="pre">generate_dataset_sample</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">custom_dataset_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_ground_truth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.dataset_generator.dataset_generator.DatasetGenerator.generate_dataset_sample" title="Permalink to this definition">¶</a></dt>
+<dd><p>Generate a Dataset, where the number of DatasetItems for each number of items in the knowledge base is
+specified. For example, if there are 4 Queryables in the ArgumentationSystem, then a knowledge base can contain
+either 0, 1, or 2 (=4/2) items. If, for example, sample_size = 10 then for each knowledge base size 10
+ArgumentationTheories are generated, so the total number of DatasetItems is 30.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>custom_dataset_name</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>]) – Optional, name of the Dataset. Otherwise a name based on the timestamp is chosen.</p></li>
+<li><p><strong>include_ground_truth</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – Boolean indicating if the ground truth should be computed. Note: this takes time!</p></li>
+<li><p><strong>sample_size</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code>) – Number of DatasetItems for each number of items in the knowledge base.</p></li>
+<li><p><strong>verbose</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code>) – Boolean indicating if information should be printed.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>The resulting Dataset.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="dataset-classes">
+<h3>DataSet classes<a class="headerlink" href="#dataset-classes" title="Permalink to this headline">¶</a></h3>
+<dl class="py class">
+<dt class="sig sig-object py" id="modules.dataset_generator.dataset.Dataset">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">Dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">argumentation_system_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_items</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.dataset_generator.dataset.Dataset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<blockquote>
+<div><dl class="py method">
+<dt class="sig sig-object py" id="modules.dataset_generator.dataset.Dataset.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">argumentation_system_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_items</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.dataset_generator.dataset.Dataset.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Dataset has a name, the name of its ArgumentationSystem and a list of DatasetItems.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Name of the Dataset.</p></li>
+<li><p><strong>argumentation_system_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – Name of the ArgumentationSystem on which the Dataset is based.</p></li>
+<li><p><strong>dataset_items</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">DatasetItem</span></code>]) – Items in the Dataset.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div></blockquote>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="modules.dataset_generator.dataset_item.DatasetItem">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">DatasetItem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argumentation_system</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">argumentation_system_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">knowledge_base</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.dataset_generator.dataset_item.DatasetItem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<blockquote>
+<div><dl class="py method">
+<dt class="sig sig-object py" id="modules.dataset_generator.dataset_item.DatasetItem.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argumentation_system</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">argumentation_system_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">knowledge_base</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.dataset_generator.dataset_item.DatasetItem.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>A DatasetItem has an ArgumentationSystem, its name and a knowledge base.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>argumentation_system</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentationSystem</span></code>) – The ArgumentationSystem on which the DatasetItem is based.</p></li>
+<li><p><strong>argumentation_system_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The name of the ArgumentationSystem.</p></li>
+<li><p><strong>knowledge_base</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Queryable</span></code>]) – The knowledge base (list of Queryables).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.dataset_generator.dataset_item.DatasetItem.from_str">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_item_str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.dataset_generator.dataset_item.DatasetItem.from_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the DatasetItem from a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dataset_item_str</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – String representation of the DatasetItem.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>DatasetItem represented by the input string.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="modules.dataset_generator.annotated_dataset_item.AnnotatedDatasetItem">
+<em class="property"><span class="pre">class</span> </em><span class="sig-name descname"><span class="pre">AnnotatedDatasetItem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argumentation_system</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">argumentation_system_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">knowledge_base</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topic_literal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gt_acceptability_label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gt_stability_label</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.dataset_generator.annotated_dataset_item.AnnotatedDatasetItem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">stability_label_algorithm.modules.dataset_generator.dataset_item.DatasetItem</span></code></p>
+<p>An AnnotatedDatasetItem is a specific type of DatasetItem that also has a ground truth acceptability and stability
+label for a topic literal.</p>
+<blockquote>
+<div><dl class="py method">
+<dt class="sig sig-object py" id="modules.dataset_generator.annotated_dataset_item.AnnotatedDatasetItem.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">argumentation_system</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">argumentation_system_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">knowledge_base</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">topic_literal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gt_acceptability_label</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gt_stability_label</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.dataset_generator.annotated_dataset_item.AnnotatedDatasetItem.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an AnnotatedDatasetItem.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>argumentation_system</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">ArgumentationSystem</span></code>) – The ArgumentationSystem on which the DatasetItem is based.</p></li>
+<li><p><strong>argumentation_system_name</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – The name of the ArgumentationSystem.</p></li>
+<li><p><strong>knowledge_base</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">List</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Queryable</span></code>]) – The knowledge base (list of Queryables).</p></li>
+<li><p><strong>topic_literal</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Literal</span></code>) – The Literal for which the ground truth is given.</p></li>
+<li><p><strong>gt_acceptability_label</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">StabilityLabel</span></code>) – Ground truth acceptability label for the topic Literal.</p></li>
+<li><p><strong>gt_stability_label</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">StabilityLabel</span></code>) – Ground truth stability label for the topic Literal.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="modules.dataset_generator.annotated_dataset_item.AnnotatedDatasetItem.from_str">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">from_str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_item_str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#modules.dataset_generator.annotated_dataset_item.AnnotatedDatasetItem.from_str" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the DatasetItem from a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dataset_item_str</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code>) – String representation of the DatasetItem.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>DatasetItem represented by the input string.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="experiments.html" class="btn btn-neutral float-right" title="Running Experiments" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="importing.html" class="btn btn-neutral float-left" title="Reading an argumentation system" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Daphne Odekerken.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
