@@ -6,7 +6,8 @@ import matplotlib as ml
 import matplotlib.pyplot as plt
 import pandas
 
-from stability_label_algorithm.modules.argumentation.argumentation_theory.argumentation_theory import ArgumentationTheory
+from stability_label_algorithm.modules.argumentation.argumentation_theory.argumentation_theory import \
+    ArgumentationTheory
 from stability_label_algorithm.modules.argumentation.labelers.timed_four_bool_labeler import TimedFourBoolLabeler
 from stability_label_algorithm.modules.dataset_generator.dataset_generator import DatasetGenerator
 from tests.utils import path_to_resources_folder

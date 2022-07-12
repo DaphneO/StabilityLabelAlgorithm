@@ -16,6 +16,8 @@ git clone https://github.com/DaphneO/StabilityLabelAlgorithm.git
 pip install -r requirements.txt
 ```
 
+If you want to export the figures using the code in the experiments folder, then make sure that latex is installed on your machine.
+
 Documentation
 -------------
 For more information see the documentation website:

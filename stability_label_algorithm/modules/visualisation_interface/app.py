@@ -144,7 +144,7 @@ def get_language_div(argumentation_system, about_text):
 
     about_div = html.Div(
         [
-            html.H3('About this argumentation setup'),
+            html.H3('About this argumentation system'),
             html.P(about_text),
             html.B(),
             dcc.Link('Go back to the main page', href='/')

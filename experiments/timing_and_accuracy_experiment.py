@@ -7,7 +7,8 @@ import matplotlib.pyplot as plt
 import numpy
 import pandas
 
-from stability_label_algorithm.modules.argumentation.argumentation_theory.argumentation_theory import ArgumentationTheory
+from stability_label_algorithm.modules.argumentation.argumentation_theory.argumentation_theory import \
+    ArgumentationTheory
 from stability_label_algorithm.modules.argumentation.labelers.timed_four_bool_labeler import TimedFourBoolLabeler
 from stability_label_algorithm.modules.argumentation.labelers.naive_stability_labeler import NaiveStabilityLabeler
 from stability_label_algorithm.modules.argumentation.labelers.stability_label import StabilityLabel
@@ -20,7 +21,10 @@ ml.rcParams.update({
     'font.family': 'serif',
     'text.usetex': True,
     'pgf.rcfonts': False,
+    'font.size': 12
 })
+
+EXTENSIONS = ['pgf', 'pdf']
 
 
 class TimingAndAccuracyExperiment:
@@ -104,16 +108,18 @@ class TimingAndAccuracyExperiment:
     def plot_computation_time_naive_per_knowledge_base_size(self):
         fig, ax = plt.subplots(1, figsize=(8, 4))
         x = numpy.linspace(0, 8.2, 100)
-        ax.plot(x + 1, 0.827 * 3 ** x, 'r', linewidth=0.6, linestyle=':')
+        ax.plot(x + 1, 0.392 * 3 ** x, 'r', linewidth=0.6, linestyle=':')
         self.computation_df.boxplot(ax=ax, column=['NaiveMs'], by='QUnknown', showfliers=False)
         ax.set_xlabel(r'Number of unknown queryables ($|\mathcal{Q}_\mathit{pos}| - |\mathcal{K}|$)')
         ax.set_ylabel('Computation time in ms')
+        ax.set_yticks([0, 500, 1000, 1500, 2000, 2500, 3000])
         ax.grid(True)
         ax.set_title('')
         plt.suptitle('')
         plt.tight_layout()
-        plt.savefig(self.result_folder_path /
-                    ('NaiveComputationTime' + '_' + self.argumentation_system_file_name + '.pgf'))
+        for extension in EXTENSIONS:
+            plt.savefig(self.result_folder_path /
+                        ('NaiveComputationTime' + '_' + self.argumentation_system_file_name + '.' + extension))
 
     def plot_computation_time_four_bool_per_knowledge_base_size(self):
         fig, ax = plt.subplots(1, figsize=(8, 4))
@@ -124,13 +130,14 @@ class TimingAndAccuracyExperiment:
         ax.set_title('')
         plt.suptitle('')
         plt.tight_layout()
-        plt.savefig(self.result_folder_path /
-                    ('FourBoolComputationTime' + '_' + self.argumentation_system_file_name + '.pgf'))
+        for extension in EXTENSIONS:
+            plt.savefig(self.result_folder_path /
+                        ('FourBoolComputationTime' + '_' + self.argumentation_system_file_name + '.' + extension))
 
     def plot_computation_time_naive_vs_four_bool_per_knowledge_base_size(self):
         fig, axes = plt.subplots(2, figsize=(8, 6))
         x = numpy.linspace(0, 8.2, 100)
-        axes[0].plot(x + 1, 0.827 * 3 ** x, 'r', linewidth=0.6, linestyle=':')
+        axes[0].plot(x + 1, 0.392 * 3 ** x, 'r', linewidth=0.6, linestyle=':')
         self.computation_df.boxplot(ax=axes[0], column=['NaiveMs'], by='QUnknown', showfliers=False)
         self.computation_df.boxplot(ax=axes[1], column=['FourBoolMs'], by='QUnknown', showfliers=False)
         for ax in axes:
@@ -141,8 +148,10 @@ class TimingAndAccuracyExperiment:
         axes[1].set_title(r'Computation time of \textsc{stability-label}')
         plt.suptitle(r'\textsc{stability-naive} vs. \textsc{stability-label}')
         plt.tight_layout()
-        plt.savefig(self.result_folder_path /
-                    ('NaiveVersusFourBoolComputationTime' + '_' + self.argumentation_system_file_name + '.pgf'))
+        for extension in EXTENSIONS:
+            plt.savefig(self.result_folder_path /
+                        ('NaiveVersusFourBoolComputationTime' + '_' +
+                         self.argumentation_system_file_name + '.' + extension))
 
     def _export_confusion_matrix(self,
                                  data_categorisation_function: Callable[[str], Any],
